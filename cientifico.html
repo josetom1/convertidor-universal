@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Herramientas Científicas — Convertidor Universal</title>
+  <meta name="description" content="Traducción ADN a proteína, %GC, complemento reverso, análisis de proteínas, molaridad, diluciones y conversión de unidades." />
+  <link rel="stylesheet" href="css/style.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2L4 8v12l10 6 10-6V8L14 2z"/><path d="M14 14L4 8M14 14l10-6M14 14v12"/></svg>
+        <span>Convertidor Universal</span>
+      </a>
+
+      <nav class="nav-tabs">
+        <a class="nav-tab" href="index.html">🏠 <span>Inicio</span></a>
+        <a class="nav-tab active" href="cientifico.html">🔬 <span>Científico</span></a>
+        <a class="nav-tab" href="herramientas.html">📄 <span>Archivos</span></a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" title="Cambiar tema">🌙</button>
+        <a class="premium-badge" href="index.html#premium">⭐ Ser Premium</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main class="main">
+
+    <h2 style="margin-bottom:0.5rem">🔬 Herramientas Científicas</h2>
+    <p style="color:var(--text-secondary);margin-bottom:1.5rem">
+      Traducción ADN → proteína, %GC, complemento reverso, análisis de proteínas y cálculos de laboratorio.
+    </p>
+
+    <div class="tool-grid">
+
+      <!-- 1. Traducción ADN -->
+      <div class="tool-card">
+        <div class="tool-card-header"><span class="icon">🧬</span> ADN → Proteína</div>
+        <div class="tool-card-body">
+          <div class="field-group">
+            <label>Secuencia de ADN</label>
+            <textarea id="dna-seq" placeholder="Ej: ATGGCCCTGGAGACAAGCACATCCTTGCAGGCT..."></textarea>
+          </div>
+          <div class="row">
+            <div class="field-group">
+              <label>Marco de lectura</label>
+              <select id="frame-select">
+                <option value="1">Marco +1</option>
+                <option value="2">Marco +2</option>
+                <option value="3">Marco +3</option>
+                <option value="-1">Marco -1</option>
+                <option value="-2">Marco -2</option>
+                <option value="-3">Marco -3</option>
+                <option value="0">Todos (6 marcos)</option>
+              </select>
+            </div>
+            <div style="display:flex;align-items:flex-end">
+              <button class="btn btn-primary btn-full" id="btn-translate">Traducir</button>
+            </div>
+          </div>
+          <div id="translate-result" class="result-box" style="margin-top:0.75rem;font-size:0.9rem;min-height:40px;display:flex;align-items:center;justify-content:center;color:var(--text-light)">
+            Introduce una secuencia y haz clic en "Traducir"
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. GC Content -->
+      <div class="tool-card">
+        <div class="tool-card-header"><span class="icon">📊</span> %GC y Temperatura Melting</div>
+        <div class="tool-card-body">
+          <div class="field-group">
+            <label>Secuencia de ADN</label>
+            <textarea id="gc-seq" placeholder="Ej: ATGGCCCTGGAGACAAGCACATCCTTGCAGGCT..."></textarea>
+          </div>
+          <button class="btn btn-primary btn-full" id="btn-gc">Calcular %GC</button>
+          <div id="gc-result" class="result-box" style="margin-top:0.75rem;min-height:40px;display:flex;align-items:center;justify-content:center;color:var(--text-light)">
+            Introduce una secuencia de ADN
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Reverse Complement -->
+      <div class="tool-card">
+        <div class="tool-card-header"><span class="icon">🔄</span> Complemento Reverso</div>
+        <div class="tool-card-body">
+          <div class="field-group">
+            <label>Secuencia de ADN</label>
+            <textarea id="rc-seq" placeholder="Ej: ATGGCCCTGGAG"></textarea>
+          </div>
+          <button class="btn btn-primary btn-full" id="btn-rc">Calcular</button>
+          <div id="rc-result" class="result-box" style="margin-top:0.75rem;min-height:40px;display:flex;align-items:center;justify-content:center;color:var(--text-light)">
+            Introduce una secuencia
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Protein Analysis -->
+      <div class="tool-card">
+        <div class="tool-card-header"><span class="icon">🔬</span> Analizar Proteína</div>
+        <div class="tool-card-body">
+          <div class="field-group">
+            <label>Secuencia de proteína</label>
+            <textarea id="prot-seq" placeholder="Ej: MVLSPADKTNVKAAW..."></textarea>
+          </div>
+          <button class="btn btn-primary btn-full" id="btn-protein">Analizar</button>
+          <div id="prot-result" class="result-box" style="margin-top:0.75rem;min-height:40px;display:flex;align-items:center;justify-content:center;color:var(--text-light)">
+            Introduce una secuencia de proteína
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Molaridad -->
+      <div class="tool-card">
+        <div class="tool-card-header"><span class="icon">🧪</span> Calculadora de Molaridad</div>
+        <div class="tool-card-body">
+          <div class="row-3">
+            <div class="field-group">
+              <label>Masa (g)</label>
+              <input type="number" id="mol-mass" step="any" placeholder="0.5" />
+            </div>
+            <div class="field-group">
+              <label>PM (g/mol)</label>
+              <input type="number" id="mol-pm" step="any" placeholder="342.3" />
+            </div>
+            <div class="field-group">
+              <label>Volumen</label>
+              <div class="row" style="gap:0.35rem">
+                <input type="number" id="mol-vol" step="any" placeholder="100" style="width:60%" />
+                <select id="mol-unit" style="width:35%">
+                  <option value="L">L</option>
+                  <option value="mL" selected>mL</option>
+                  <option value="µL">µL</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" id="btn-molarity">Calcular Molaridad</button>
+          <div id="mol-result" class="result-box" style="margin-top:0.75rem;min-height:40px;display:flex;align-items:center;justify-content:center;color:var(--text-light)">
+            Introduce los valores
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Dilución -->
+      <div class="tool-card">
+        <div class="tool-card-header"><span class="icon">💧</span> Calculadora de Diluciones</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.75rem">C₁ · V₁ = C₂ · V₂ (deja vacío el valor a calcular)</p>
+          <div class="row-3">
+            <div class="field-group">
+              <label>C₁</label>
+              <input type="number" id="dil-c1" step="any" placeholder="Conc. inicial" />
+            </div>
+            <div class="field-group">
+              <label>V₁</label>
+              <input type="number" id="dil-v1" step="any" placeholder="Vol. inicial" />
+            </div>
+            <div class="field-group">
+              <label>C₂</label>
+              <input type="number" id="dil-c2" step="any" placeholder="Conc. final" />
+            </div>
+            <div class="field-group">
+              <label>V₂</label>
+              <input type="number" id="dil-v2" step="any" placeholder="Vol. final" />
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" id="btn-dilution">Calcular Dilución</button>
+          <div id="dil-result" class="result-box" style="margin-top:0.75rem;min-height:40px;display:flex;align-items:center;justify-content:center;color:var(--text-light)">
+            Proporciona 3 valores
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Conversión de Unidades -->
+      <div class="tool-card" style="grid-column:1/-1">
+        <div class="tool-card-header"><span class="icon">📐</span> Conversión de Unidades Científicas</div>
+        <div class="tool-card-body">
+          <div class="row-3">
+            <div class="field-group">
+              <label>Valor</label>
+              <input type="number" id="conv-value" step="any" placeholder="100" />
+            </div>
+            <div class="field-group">
+              <label>De</label>
+              <select id="conv-from">
+                <optgroup label="Masa">
+                  <option value="kg">kg</option><option value="g" selected>g</option><option value="mg">mg</option>
+                  <option value="µg">µg</option><option value="ng">ng</option><option value="lb">lb</option>
+                </optgroup>
+                <optgroup label="Volumen">
+                  <option value="L">L</option><option value="mL">mL</option><option value="µL">µL</option>
+                  <option value="gal">gal</option>
+                </optgroup>
+                <optgroup label="Temperatura">
+                  <option value="°C">°C</option><option value="°F">°F</option><option value="K">K</option>
+                </optgroup>
+                <optgroup label="Concentración">
+                  <option value="M">M</option><option value="mM">mM</option><option value="µM">µM</option>
+                  <option value="g/L">g/L</option><option value="mg/mL">mg/mL</option>
+                </optgroup>
+                <optgroup label="Energía">
+                  <option value="J">J</option><option value="kJ">kJ</option><option value="cal">cal</option>
+                  <option value="kcal">kcal</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>A</label>
+              <select id="conv-to">
+                <option value="g">g</option><option value="kg">kg</option><option value="mg" selected>mg</option>
+                <option value="µg">µg</option><option value="ng">ng</option><option value="lb">lb</option>
+                <option value="L">L</option><option value="mL">mL</option><option value="µL">µL</option>
+                <option value="°C">°C</option><option value="°F">°F</option><option value="K">K</option>
+                <option value="M">M</option><option value="mM">mM</option><option value="µM">µM</option>
+                <option value="g/L">g/L</option><option value="mg/mL">mg/mL</option>
+                <option value="J">J</option><option value="kJ">kJ</option><option value="cal">cal</option>
+                <option value="kcal">kcal</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="btn-convert">Convertir</button>
+          <div id="conv-result" class="result-box" style="margin-top:0.75rem;min-height:40px;display:flex;align-items:center;justify-content:center;color:var(--text-light)">
+            Introduce un valor y selecciona unidades
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Ad -->
+    <div class="ad-related" style="margin-top:2rem;min-height:90px;background:var(--primary-light);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--text-secondary)">
+      📢 Anuncio AdSense — Banner 728×90 (reemplazar con código real)
+    </div>
+
+  </main>
+
+  <!-- ========== AD WALL MODAL ========== -->
+  <div class="modal-overlay">
+    <div class="modal">
+      <h2>📺 Solo un anuncio y continúas</h2>
+      <p>Para usar esta herramienta gratuitamente, solo mira un anuncio breve. O hazte premium y olvídate de los anuncios.</p>
+
+      <div class="ad-placeholder">
+        <span class="ad-label">Anuncio</span>
+        <div style="text-align:center">
+          <div class="ad-timer">⏱️</div>
+          <div class="ad-timer-label">Haz clic en "Ver anuncio" para continuar</div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-full btn-watch-ad">
+        📺 Ver anuncio (5 seg)
+      </button>
+
+      <div class="divider">o</div>
+
+      <p style="font-size:0.85rem;margin-bottom:0.5rem">¿Ya eres premium? Ingresa tu código:</p>
+      <div class="premium-input">
+        <input type="text" placeholder="Código premium" />
+        <button class="btn btn-accent btn-sm">Activar</button>
+      </div>
+
+      <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-light)">
+        🔒 Sin registro. Sin spam. Tus archivos nunca salen de tu dispositivo.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <p>Convertidor Universal — Hecho con ❤️ | Los archivos se procesan 100% en tu navegador | <a href="index.html#premium" style="color:var(--accent)">Premium</a></p>
+    <div class="ad-related" style="margin-top:0.75rem;min-height:90px;background:var(--primary-light);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--text-secondary);margin:0 auto;max-width:728px">
+      📢 Anuncio AdSense — Banner 728×90 (reemplazar con código real)
+    </div>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="js/scientific.js"></script>
+  <script src="js/general.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

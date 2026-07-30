@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convertidor Universal — PDF, imágenes, Excel, Word</title>
+  <meta name="description" content="Convierte documentos al instante. Elige tu formato y haz lo que necesites. Gratis con anuncios." />
+  <link rel="stylesheet" href="css/style.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo" href="index.html" style="text-decoration:none">
+        <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2L4 8v12l10 6 10-6V8L14 2z"/><path d="M14 14L4 8M14 14l10-6M14 14v12"/></svg>
+        <span>Convertidor <span style="font-weight:400">Universal</span></span>
+      </a>
+      <div style="flex:1"></div>
+      <div class="header-actions">
+        <span class="usage-counter" id="usage-counter">📊 5/5 gratis</span>
+        <button class="theme-toggle">🌙</button>
+        <button class="premium-badge" id="header-premium-btn">⭐ Sin anuncios</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main class="main" style="padding-top:1rem">
+
+    <!-- === Pregunta principal === -->
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <h1 style="font-size:1.4rem;font-weight:700;margin-bottom:0.25rem">📄 ¿Qué archivo tienes?</h1>
+      <p style="color:var(--text-secondary);font-size:0.9rem">Selecciona el formato y te mostramos qué puedes hacer</p>
+    </div>
+
+    <!-- === Selector de formato === -->
+    <div class="format-selector" id="format-selector">
+      <button class="format-btn active" data-format="all">📁 Todos</button>
+      <button class="format-btn" data-format="pdf">📄 PDF</button>
+      <button class="format-btn" data-format="image">🖼️ Imagen</button>
+      <button class="format-btn" data-format="excel">📊 Excel</button>
+      <button class="format-btn" data-format="word">📝 Word</button>
+      <button class="format-btn" data-format="text">✏️ Texto</button>
+      <button class="format-btn" data-format="other">🔣 Otros</button>
+    </div>
+
+    <!-- === Barra de búsqueda (opcional, para cuando hay muchos) === -->
+    <div style="margin-bottom:1rem">
+      <input type="text" id="tool-search" placeholder="🔍 Buscar dentro de esta categoría..." style="width:100%;padding:0.6rem 1rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font);font-size:0.85rem;background:var(--surface);color:var(--text)" />
+    </div>
+
+    <!-- === AD Banner (arriba) === -->
+    <div class="ad-row"><span>📢 Anuncio</span></div>
+
+    <!-- === Grilla de herramientas === -->
+    <div class="tool-grid" id="tool-grid">
+
+      <!-- ===== PDF ===== -->
+      <div class="tool-card" data-format="pdf">
+        <div class="tool-card-header"><span class="icon">📄</span> PDF → Texto</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Extrae todo el texto de un PDF</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube un PDF</p><input type="file" class="tool-file" accept=".pdf" data-id="pdf-text-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="pdf-text">Extraer Texto</button>
+          <div class="result-placeholder" data-result="pdf-text">Sube un PDF para extraer su texto</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="pdf">
+        <div class="tool-card-header"><span class="icon">📑</span> Combinar PDFs</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Une varios PDFs en uno solo</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Varios PDFs</p><input type="file" class="tool-file" accept=".pdf" multiple data-id="pdf-merge-files" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="pdf-merge">Combinar y Descargar</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Selecciona 2+ archivos</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="pdf">
+        <div class="tool-card-header"><span class="icon">✂️</span> Dividir PDF</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Separa cada página en un PDF individual</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube un PDF</p><input type="file" class="tool-file" accept=".pdf" data-id="pdf-split-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="pdf-split">Dividir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Página por página</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="pdf">
+        <div class="tool-card-header"><span class="icon">🗜️</span> Comprimir PDF</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Reduce el tamaño del PDF para enviar por email</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube un PDF</p><input type="file" class="tool-file" accept=".pdf" data-id="pdf-compress-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="pdf-compress">Comprimir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Reduce el tamaño</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="pdf image">
+        <div class="tool-card-header"><span class="icon">🖼️</span> PDF → Imágenes</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte cada página del PDF a PNG/JPG</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube un PDF</p><input type="file" class="tool-file" accept=".pdf" data-id="pdf-img-file" /></div>
+          <div class="row-2" style="margin-bottom:0.5rem">
+            <select class="tool-select" data-id="pdf-img-format"><option value="png">PNG</option><option value="jpg">JPG</option></select>
+            <button class="btn btn-primary btn-full tool-btn" data-btn="pdf-img">Convertir</button>
+          </div>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Cada página en imagen</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="image pdf">
+        <div class="tool-card-header"><span class="icon">📸</span> Imagen → PDF</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte fotos o imágenes escaneadas a PDF</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Una o varias imágenes</p><input type="file" class="tool-file" accept="image/*" multiple data-id="img-pdf-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="img-pdf">Crear PDF</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Fotos a PDF</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="pdf">
+        <div class="tool-card-header"><span class="icon">🔄</span> Rotar PDF</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Rota las páginas del PDF 90°, 180° o 270°</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube un PDF</p><input type="file" class="tool-file" accept=".pdf" data-id="pdf-rotate-file" /></div>
+          <div class="row-2" style="margin-bottom:0.5rem">
+            <select class="tool-select" data-id="pdf-rotate-angle"><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select>
+            <button class="btn btn-primary btn-full tool-btn" data-btn="pdf-rotate">Rotar</button>
+          </div>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Rota páginas</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="pdf text">
+        <div class="tool-card-header"><span class="icon">📄</span> PDF → Markdown</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte PDF a formato Markdown</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube PDF</p><input type="file" class="tool-file" accept=".pdf" data-id="pdf-md-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="pdf-md">Convertir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">PDF a .md</div>
+        </div>
+      </div>
+
+      <!-- ===== EXCEL ===== -->
+      <div class="tool-card" data-format="excel text">
+        <div class="tool-card-header"><span class="icon">📊</span> Excel → CSV</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte Excel a CSV (compatible con cualquier programa)</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube Excel (.xlsx/.xls)</p><input type="file" class="tool-file" accept=".xlsx,.xls" data-id="excel-csv-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="excel-csv">Convertir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">A CSV</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="excel text">
+        <div class="tool-card-header"><span class="icon">📋</span> Excel → JSON</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte Excel a JSON para programación</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube Excel (.xlsx/.xls)</p><input type="file" class="tool-file" accept=".xlsx,.xls" data-id="excel-json-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="excel-json">Convertir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">A JSON</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="text excel">
+        <div class="tool-card-header"><span class="icon">📊</span> CSV → Excel</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte un CSV a formato Excel</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube CSV</p><input type="file" class="tool-file" accept=".csv" data-id="csv-excel-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="csv-excel">Convertir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">A .xlsx</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="text excel">
+        <div class="tool-card-header"><span class="icon">📋</span> JSON → Excel</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte un JSON array a Excel</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube JSON</p><input type="file" class="tool-file" accept=".json" data-id="json-excel-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="json-excel">Convertir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">A .xlsx</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="excel text">
+        <div class="tool-card-header"><span class="icon">📊</span> Excel → Markdown</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte tus tablas a formato Markdown</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube Excel (.xlsx)</p><input type="file" class="tool-file" accept=".xlsx,.xls" data-id="excel-md-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="excel-md">Convertir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Tabla Markdown</div>
+        </div>
+      </div>
+
+      <!-- ===== WORD ===== -->
+      <div class="tool-card" data-format="word text">
+        <div class="tool-card-header"><span class="icon">📝</span> Word → HTML</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte documentos Word a HTML para web</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube Word (.docx)</p><input type="file" class="tool-file" accept=".docx,.doc" data-id="word-html-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="word-html">Convertir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">A HTML limpio</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="word text">
+        <div class="tool-card-header"><span class="icon">📃</span> Word → Texto</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Extrae el texto sin formato del Word</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube Word (.docx)</p><input type="file" class="tool-file" accept=".docx,.doc" data-id="word-text-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="word-text">Extraer</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Texto plano</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="word text">
+        <div class="tool-card-header"><span class="icon">📝</span> Word → Markdown</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte Word a Markdown para documentación</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube Word (.docx)</p><input type="file" class="tool-file" accept=".docx,.doc" data-id="word-md-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="word-md">Convertir</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">A .md</div>
+        </div>
+      </div>
+
+      <!-- ===== IMAGEN ===== -->
+      <div class="tool-card" data-format="image">
+        <div class="tool-card-header"><span class="icon">🖼️</span> Convertir Imagen</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Cambia el formato de tu imagen (PNG, JPG, WEBP, GIF)</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube imagen</p><input type="file" class="tool-file" accept="image/*" data-id="img-convert-file" /></div>
+          <div class="row-2" style="margin-bottom:0.5rem">
+            <select class="tool-select" data-id="img-format"><option value="png">PNG</option><option value="jpg">JPG</option><option value="webp">WEBP</option><option value="gif">GIF</option></select>
+            <button class="btn btn-primary btn-full tool-btn" data-btn="img-convert">Convertir</button>
+          </div>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Cambia formato</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="image">
+        <div class="tool-card-header"><span class="icon">📏</span> Redimensionar Imagen</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Cambia el tamaño manteniendo la proporción</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube imagen</p><input type="file" class="tool-file" accept="image/*" data-id="img-resize-file" /></div>
+          <div class="row-2" style="margin-bottom:0.5rem">
+            <input type="number" class="tool-input" data-id="img-width" value="800" min="10" placeholder="Ancho" style="width:48%" />
+            <input type="number" class="tool-input" data-id="img-height" value="800" min="10" placeholder="Alto" style="width:48%" />
+          </div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="img-resize">Redimensionar</button>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Mantiene proporción</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="image">
+        <div class="tool-card-header"><span class="icon">🎨</span> Filtros de Imagen</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Aplica efectos: grises, sepia, negativo, brillo</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube imagen</p><input type="file" class="tool-file" accept="image/*" data-id="img-filter-file" /></div>
+          <div class="row-2" style="margin-bottom:0.5rem">
+            <select class="tool-select" data-id="img-filter-type"><option value="grayscale">Grises</option><option value="sepia">Sepia</option><option value="negative">Negativo</option><option value="brightness">Brillo</option></select>
+            <button class="btn btn-secondary btn-full tool-btn" data-btn="img-filter">Aplicar</button>
+          </div>
+          <div class="result-placeholder" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Filtros artísticos</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="image text">
+        <div class="tool-card-header"><span class="icon">🔣</span> Imagen a Base64</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte una imagen a Data URI (para developers)</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube imagen</p><input type="file" class="tool-file" accept="image/*" data-id="img-base64-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="img-base64">Convertir</button>
+          <div class="result-placeholder" data-result="img-base64" style="font-size:0.75rem;color:var(--text-secondary);text-align:center">Data URI</div>
+        </div>
+      </div>
+
+      <!-- ===== TEXTO ===== -->
+      <div class="tool-card" data-format="text">
+        <div class="tool-card-header"><span class="icon">📊</span> Estadísticas de Texto</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Caracteres, palabras, líneas y párrafos</p>
+          <textarea class="tool-textarea" data-id="text-stats-input" placeholder="Pega tu texto aquí..." style="min-height:80px;font-family:var(--font)"></textarea>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="text-stats">Analizar</button>
+          <div class="result-placeholder" data-result="text-stats">Resultados aquí</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="text">
+        <div class="tool-card-header"><span class="icon">🔤</span> Cambiar Mayúsculas</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte a MAYÚSCULAS, minúsculas, Title Case, camelCase</p>
+          <textarea class="tool-textarea" data-id="text-case-input" placeholder="Texto a convertir..." style="min-height:60px;font-family:var(--font)"></textarea>
+          <div class="row-2" style="margin-bottom:0.5rem">
+            <select class="tool-select" data-id="text-case-type"><option value="upper">MAYÚS</option><option value="lower">minús</option><option value="title">Title</option><option value="camel">camelCase</option></select>
+            <button class="btn btn-primary btn-full tool-btn" data-btn="text-case">Convertir</button>
+          </div>
+          <div class="result-placeholder" data-result="text-case">Resultado</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="text">
+        <div class="tool-card-header"><span class="icon">🔍</span> Comparar Textos</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Encuentra diferencias entre dos textos</p>
+          <div class="row-2" style="margin-bottom:0.5rem">
+            <textarea class="tool-textarea" data-id="diff-text-a" placeholder="Original..." style="min-height:60px;font-family:var(--font)"></textarea>
+            <textarea class="tool-textarea" data-id="diff-text-b" placeholder="Modificado..." style="min-height:60px;font-family:var(--font)"></textarea>
+          </div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="diff">Comparar</button>
+          <div class="result-placeholder" data-result="diff">Diferencias</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="text">
+        <div class="tool-card-header"><span class="icon">🌐</span> HTML → Markdown</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte código HTML a Markdown</p>
+          <textarea class="tool-textarea" data-id="html-md-input" placeholder="&lt;h1&gt;Título&lt;/h1&gt;..." style="min-height:60px"></textarea>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="html-md">Convertir</button>
+          <div class="result-placeholder" data-result="html-md">Markdown</div>
+        </div>
+      </div>
+
+      <!-- ===== OTROS ===== -->
+      <div class="tool-card" data-format="text other">
+        <div class="tool-card-header"><span class="icon">🔣</span> Base64</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Codifica o decodifica texto a Base64</p>
+          <textarea class="tool-textarea" data-id="base64-input" placeholder="Texto a codificar/decodificar..." style="min-height:60px;font-family:var(--font)"></textarea>
+          <div class="row-2" style="margin-bottom:0.5rem">
+            <button class="btn btn-primary btn-full tool-btn" data-btn="base64-encode">🔒 Codificar</button>
+            <button class="btn btn-secondary btn-full tool-btn" data-btn="base64-decode">🔓 Decodificar</button>
+          </div>
+          <div class="result-placeholder" data-result="base64">Resultado Base64</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="other">
+        <div class="tool-card-header"><span class="icon">🔐</span> Hash SHA-256</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Calcula el hash SHA-256 de cualquier archivo</p>
+          <div class="file-upload"><div class="icon">📁</div><p>Sube cualquier archivo</p><input type="file" class="tool-file" data-id="hash-file" /></div>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="hash">Calcular Hash</button>
+          <div class="result-placeholder" data-result="hash">SHA-256</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- === AD Banner (abajo) === -->
+    <div class="ad-row" style="margin-top:1.5rem"><span>📢 Anuncio</span></div>
+
+    <!-- === Mensaje sin resultados === -->
+    <div id="no-results" style="display:none;text-align:center;padding:2rem;color:var(--text-light)">
+      🕵️ No encontramos herramientas para esa búsqueda
+    </div>
+
+  </main>
+
+  <!-- ========== AD WALL MODAL ========== -->
+  <div class="modal-overlay" id="ad-wall">
+    <div class="modal" style="max-width:400px">
+      <h2 style="font-size:1.1rem">📺 Ver anuncio</h2>
+      <p style="font-size:0.8rem">Esta herramienta es gratis gracias a los anuncios.</p>
+      <div class="ad-placeholder" style="height:160px">
+        <span class="ad-label">Anuncio</span>
+        <div style="text-align:center">
+          <div class="ad-timer" id="ad-timer">⏱️ 5s</div>
+          <div class="ad-timer-label" id="ad-timer-label">Haz clic</div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full btn-watch-ad" id="btn-watch-ad">📺 Ver anuncio (5 seg)</button>
+      <div class="divider">o</div>
+      <button class="btn btn-accent btn-full" id="ad-wall-premium">⭐ Sin anuncios — Premium</button>
+      <p style="margin-top:0.5rem;font-size:0.65rem;color:var(--text-light)">🔒 Tus archivos nunca salen de tu dispositivo</p>
+    </div>
+  </div>
+
+  <!-- ========== PREMIUM MODAL ========== -->
+  <div class="modal-overlay" id="premium-modal">
+    <div class="modal" style="max-width:400px">
+      <h2 style="font-size:1.1rem">⭐ Premium</h2>
+      <p style="font-size:0.8rem">Sin anuncios, sin límites.</p>
+      <div style="padding:0.5rem 0">
+        <div class="pricing-card">
+          <div class="plan-name">Premium</div>
+          <div class="plan-price" style="font-size:1.8rem"><span class="currency">$</span>5 <span class="period" style="font-size:0.7rem">/mes</span></div>
+          <ul style="text-align:left;list-style:none;padding:0;font-size:0.75rem">
+            <li>✅ Sin anuncios</li>
+            <li>✅ Ilimitado</li>
+            <li>✅ Archivos hasta 100MB</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn btn-accent btn-full" id="premium-activate-demo">✅ Probar gratis (código: PREMIUM2024)</button>
+      <div style="margin-top:0.5rem;padding:0.5rem;background:var(--bg);border-radius:var(--radius-xs)">
+        <p style="font-size:0.7rem;margin-bottom:0.25rem">🔑 ¿Tienes un código?</p>
+        <div class="row-2" style="gap:0.35rem">
+          <input type="text" id="premium-code-input" placeholder="Código" style="padding:0.35rem 0.5rem;border:1px solid var(--border);border-radius:var(--radius-xs);font-size:0.8rem;width:100%" />
+          <button class="btn btn-accent btn-sm" id="premium-code-btn">Activar</button>
+        </div>
+      </div>
+      <p style="margin-top:0.35rem;font-size:0.65rem;color:var(--text-light);cursor:pointer" id="premium-close">← Volver al modo gratis</p>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/scientific.js"></script>
+  <script src="js/general.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
