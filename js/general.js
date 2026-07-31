@@ -414,6 +414,60 @@ const GeneralTools = (() => {
     return { blob, filename: 'imagenes_convertidas.pdf', size: blob.size, pages: files.length };
   }
 
+  // --- 7.5 TEXT TO PDF (pdf-lib) ---
+
+  async function textToPDF(text, filename = 'documento.pdf') {
+    await ensurePdfLib();
+    if (!pdfLibLoaded) return { error: 'No se pudo cargar pdf-lib.' };
+
+    const pdfDoc = await PDFLib.PDFDocument.create();
+    const helvetica = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+    const fontSize = 11;
+    const margin = 50;
+    const pageWidth = 612; // US Letter
+    const pageHeight = 792;
+    const lineHeight = fontSize * 1.5;
+    const maxWidth = pageWidth - margin * 2;
+
+    let page = pdfDoc.addPage([pageWidth, pageHeight]);
+    let y = pageHeight - margin;
+
+    // Dividir texto en líneas que quepan
+    const lines = text.split('\n');
+    for (const line of lines) {
+      // Si la línea es vacía, dejar espacio
+      if (line.trim() === '') {
+        y -= lineHeight;
+        if (y < margin) { page = pdfDoc.addPage([pageWidth, pageHeight]); y = pageHeight - margin; }
+        continue;
+      }
+      // Dividir líneas largas
+      let words = line.split(' ');
+      let current = '';
+      for (const word of words) {
+        const test = current ? current + ' ' + word : word;
+        const width = helvetica.widthOfTextAtSize(test, fontSize);
+        if (width > maxWidth && current) {
+          page.drawText(current, { x: margin, y, size: fontSize, font: helvetica });
+          y -= lineHeight;
+          if (y < margin) { page = pdfDoc.addPage([pageWidth, pageHeight]); y = pageHeight - margin; }
+          current = word;
+        } else {
+          current = test;
+        }
+      }
+      if (current) {
+        page.drawText(current, { x: margin, y, size: fontSize, font: helvetica });
+        y -= lineHeight;
+        if (y < margin) { page = pdfDoc.addPage([pageWidth, pageHeight]); y = pageHeight - margin; }
+      }
+    }
+
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    return { blob, filename, size: blob.size };
+  }
+
   // --- 8. ROTATE PDF (pdf-lib) ---
 
   async function rotatePDF(file, degrees = 90) {
@@ -601,6 +655,7 @@ const GeneralTools = (() => {
     pdfToImages,
     imagesToPDF,
     rotatePDF,
+    textToPDF,
     // Excel
     excelToCSV,
     excelToJSON,

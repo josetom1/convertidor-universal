@@ -36,14 +36,17 @@
     </div>
 
     <!-- === Selector de formato === -->
-    <div class="format-selector" id="format-selector">
-      <button class="format-btn active" data-format="all">📁 Todos</button>
-      <button class="format-btn" data-format="pdf">📄 PDF</button>
-      <button class="format-btn" data-format="image">🖼️ Imagen</button>
-      <button class="format-btn" data-format="excel">📊 Excel</button>
-      <button class="format-btn" data-format="word">📝 Word</button>
-      <button class="format-btn" data-format="text">✏️ Texto</button>
-      <button class="format-btn" data-format="other">🔣 Otros</button>
+    <div style="display:flex;justify-content:center;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem">
+      <div class="format-selector" id="format-selector" style="margin-bottom:0">
+        <button class="format-btn active" data-format="all">📁 Todos</button>
+        <button class="format-btn" data-format="pdf">📄 PDF</button>
+        <button class="format-btn" data-format="image">🖼️ Imagen</button>
+        <button class="format-btn" data-format="excel">📊 Excel</button>
+        <button class="format-btn" data-format="word">📝 Word</button>
+        <button class="format-btn" data-format="text">✏️ Texto</button>
+        <button class="format-btn" data-format="other">🔣 Otros</button>
+      </div>
+      <button class="invert-btn" id="invert-btn" title="Invertir dirección de las conversiones">🔄 Invertir</button>
     </div>
 
     <!-- === Barra de búsqueda (opcional, para cuando hay muchos) === -->
@@ -65,6 +68,16 @@
           <div class="file-upload"><div class="icon">📁</div><p>Sube un PDF</p><input type="file" class="tool-file" accept=".pdf" data-id="pdf-text-file" /></div>
           <button class="btn btn-primary btn-full tool-btn" data-btn="pdf-text">Extraer Texto</button>
           <div class="result-placeholder" data-result="pdf-text">Sube un PDF para extraer su texto</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="text" data-inverse="text-pdf">
+        <div class="tool-card-header"><span class="icon">📄</span> Texto → PDF</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Crea un PDF a partir de texto plano</p>
+          <textarea class="tool-textarea" data-id="text-pdf-input" placeholder="Pega el texto para crear tu PDF..." style="min-height:100px;font-family:var(--font)"></textarea>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="text-pdf">Crear PDF</button>
+          <div class="result-placeholder" data-result="text-pdf" style="font-size:0.8rem;color:var(--text-secondary);text-align:center">Texto a PDF</div>
         </div>
       </div>
 
@@ -111,7 +124,7 @@
         </div>
       </div>
 
-      <div class="tool-card" data-format="image pdf">
+      <div class="tool-card" data-format="image pdf" data-inverse="img-pdf">
         <div class="tool-card-header"><span class="icon">📸</span> Imagen → PDF</div>
         <div class="tool-card-body">
           <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte fotos o imágenes escaneadas a PDF</p>
@@ -165,7 +178,7 @@
         </div>
       </div>
 
-      <div class="tool-card" data-format="text excel">
+      <div class="tool-card" data-format="text excel" data-inverse="csv-excel">
         <div class="tool-card-header"><span class="icon">📊</span> CSV → Excel</div>
         <div class="tool-card-body">
           <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte un CSV a formato Excel</p>
@@ -175,7 +188,7 @@
         </div>
       </div>
 
-      <div class="tool-card" data-format="text excel">
+      <div class="tool-card" data-format="text excel" data-inverse="json-excel">
         <div class="tool-card-header"><span class="icon">📋</span> JSON → Excel</div>
         <div class="tool-card-body">
           <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte un JSON array a Excel</p>
@@ -321,6 +334,16 @@
           <textarea class="tool-textarea" data-id="html-md-input" placeholder="&lt;h1&gt;Título&lt;/h1&gt;..." style="min-height:60px"></textarea>
           <button class="btn btn-primary btn-full tool-btn" data-btn="html-md">Convertir</button>
           <div class="result-placeholder" data-result="html-md">Markdown</div>
+        </div>
+      </div>
+
+      <div class="tool-card" data-format="text" data-inverse="md-html">
+        <div class="tool-card-header"><span class="icon">🌐</span> Markdown → HTML</div>
+        <div class="tool-card-body">
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.5rem">Convierte Markdown a código HTML</p>
+          <textarea class="tool-textarea" data-id="md-html-input" placeholder="# Título&#10;**negrita** *itálica*..." style="min-height:60px"></textarea>
+          <button class="btn btn-primary btn-full tool-btn" data-btn="md-html">Convertir</button>
+          <div class="result-placeholder" data-result="md-html">HTML</div>
         </div>
       </div>
 

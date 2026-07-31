@@ -318,10 +318,12 @@
   // ================================================================
 
   let currentFormat = 'all';
+  let invertMode = false;
 
   function initFormatSelector() {
     const buttons = $$('.format-btn');
     const searchInput = document.getElementById('tool-search');
+    const invertBtn = document.getElementById('invert-btn');
 
     // Click en formato
     buttons.forEach(btn => {
@@ -329,11 +331,34 @@
         buttons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentFormat = btn.dataset.format;
-        // Limpiar búsqueda al cambiar formato
         if (searchInput) searchInput.value = '';
         filterTools();
       });
     });
+
+    // Botón invertir
+    if (invertBtn) {
+      invertBtn.addEventListener('click', () => {
+        invertMode = !invertMode;
+        invertBtn.classList.toggle('active', invertMode);
+        // Mostrar/ocultar banner de modo invertido
+        let banner = document.getElementById('invert-banner');
+        if (invertMode) {
+          if (!banner) {
+            banner = document.createElement('div');
+            banner.id = 'invert-banner';
+            banner.className = 'invert-mode-banner';
+            banner.innerHTML = '🔄 Modo invertido: mostrando conversiones Y → X';
+            document.querySelector('#tool-search')?.insertAdjacentElement('beforebegin', banner);
+          }
+          banner.style.display = 'block';
+        } else if (banner) {
+          banner.style.display = 'none';
+        }
+        if (searchInput) searchInput.value = '';
+        filterTools();
+      });
+    }
 
     // Búsqueda
     if (searchInput) {
@@ -351,13 +376,15 @@
     let visibleCount = 0;
 
     cards.forEach(card => {
+      const isInverse = card.hasAttribute('data-inverse');
+      // Modo normal: mostrar todo. Modo invertido: solo contrapartes (Y → X)
+      const matchInvert = invertMode ? isInverse : true;
+      // En modo invertido ignoramos el filtro de formato (mostramos todas las Y→X)
       const formats = (card.dataset.format || '').split(' ');
-      // Coincide con el formato seleccionado?
-      const matchFormat = currentFormat === 'all' || formats.includes(currentFormat);
-      // Coincide con la búsqueda?
+      const matchFormat = invertMode || currentFormat === 'all' || formats.includes(currentFormat);
       const matchSearch = !q || card.textContent.toLowerCase().includes(q);
 
-      if (matchFormat && matchSearch) {
+      if (matchInvert && matchFormat && matchSearch) {
         card.classList.remove('hidden');
         card.classList.add('fade-in');
         visibleCount++;
@@ -369,8 +396,7 @@
 
     // Mostrar/ocultar mensaje de sin resultados
     if (noResults) {
-      noResults.style.display = (currentFormat !== 'all' && visibleCount === 0 && !q) ? 'block' : 'none';
-      if (q && visibleCount === 0) noResults.style.display = 'block';
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
     }
   }
 
@@ -462,6 +488,18 @@
         const r = await GeneralTools.pdfToText(files[0]);
         if (r.error) return setResult('pdf-text', '❌ ' + r.error, 'error');
         setResult('pdf-text', `<div style="font-weight:600;margin-bottom:0.25rem">${r.pages} páginas extraídas</div><pre style="white-space:pre-wrap;font-size:0.8rem">${r.text.slice(0,3000)}${r.text.length > 3000 ? '\n...' : ''}</pre>`);
+      });
+    });
+
+    // --- Texto → PDF (inverso) ---
+    registerTool('text-pdf', () => {
+      const text = getVal('text-pdf-input');
+      if (!text.trim()) return showToast('Pega algún texto', 'error');
+      showAdModal(async () => {
+        const r = await GeneralTools.textToPDF(text);
+        if (r.error) return showToast(r.error, 'error');
+        GeneralTools.downloadBlob(r.blob, r.filename);
+        showToast(`✅ PDF creado (${GeneralTools.formatSize(r.size)})`, 'success');
       });
     });
 
@@ -729,6 +767,20 @@
         const md = td.turndown(html);
         setResult('html-md', `<pre style="white-space:pre-wrap;font-size:0.8rem">${md}</pre>`);
       } catch (e) { setResult('html-md', '❌ ' + e.message, 'error'); }
+    });
+
+    // --- Markdown → HTML (inverso) ---
+    registerTool('md-html', async () => {
+      const md = getVal('md-html-input');
+      if (!md.trim()) return showToast('Pega algo de Markdown', 'error');
+      if (typeof marked === 'undefined') {
+        await new Promise(r => { const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js'; s.onload = r; document.head.appendChild(s); });
+      }
+      try {
+        marked.setOptions({ breaks: true, gfm: true });
+        const html = marked.parse(md);
+        setResult('md-html', `<pre style="white-space:pre-wrap;font-size:0.8rem">${html.replace(/</g, '&lt;')}</pre>`);
+      } catch (e) { setResult('md-html', '❌ ' + e.message, 'error'); }
     });
 
     // --- PDF → Markdown ---
