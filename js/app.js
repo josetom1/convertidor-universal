@@ -479,6 +479,27 @@
     el.style.overflow = 'auto';
   }
 
+  // Muestra texto + botón copiar automático
+  function setTextResult(id, text, maxChars = 3000) {
+    const el = document.querySelector(`[data-result="${id}"]`);
+    if (!el) return;
+    const preview = text.slice(0, maxChars) + (text.length > maxChars ? '\n...' : '');
+    const copyBtn = `<button class="btn btn-sm copy-btn" style="margin-bottom:0.5rem" data-copy="${encodeURIComponent(text)}">📋 Copiar texto</button>`;
+    el.className = 'result-placeholder success';
+    el.innerHTML = copyBtn + `<pre style="white-space:pre-wrap;font-size:0.8rem;margin:0">${preview}</pre>`;
+    el.style.maxHeight = '400px';
+    el.style.overflow = 'auto';
+
+    // Bind del botón copiar
+    const btn = el.querySelector('.copy-btn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const textToCopy = decodeURIComponent(btn.dataset.copy);
+        copyToClipboard(textToCopy);
+      });
+    }
+  }
+
   // --- Registrar handlers ---
   function registerTool(btnId, handler) {
     toolHandlers[btnId] = handler;
@@ -514,7 +535,7 @@
       showAdModal(async () => {
         const r = await GeneralTools.pdfToText(files[0]);
         if (r.error) return setResult('pdf-text', '❌ ' + r.error, 'error');
-        setResult('pdf-text', `<div style="font-weight:600;margin-bottom:0.25rem">${r.pages} páginas extraídas</div><pre style="white-space:pre-wrap;font-size:0.8rem">${r.text.slice(0,3000)}${r.text.length > 3000 ? '\n...' : ''}</pre>`);
+        setTextResult('pdf-text', r.text, 3000);
       });
     });
 
@@ -649,7 +670,8 @@
         const r = await GeneralTools.wordToText(files[0]);
         if (r.error) return showToast(r.error, 'error');
         GeneralTools.downloadBlob(r.blob, r.filename);
-        showToast(`✅ ${r.filename}`, 'success');
+        showToast(`✅ ${r.filename} descargado`, 'success');
+        setTextResult('word-text', r.text, 3000);
       });
     });
 
@@ -792,7 +814,7 @@
       try {
         const td = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
         const md = td.turndown(html);
-        setResult('html-md', `<pre style="white-space:pre-wrap;font-size:0.8rem">${md}</pre>`);
+        setTextResult('html-md', md, 3000);
       } catch (e) { setResult('html-md', '❌ ' + e.message, 'error'); }
     });
 
@@ -806,7 +828,7 @@
       try {
         marked.setOptions({ breaks: true, gfm: true });
         const html = marked.parse(md);
-        setResult('md-html', `<pre style="white-space:pre-wrap;font-size:0.8rem">${html.replace(/</g, '&lt;')}</pre>`);
+        setTextResult('md-html', html, 3000);
       } catch (e) { setResult('md-html', '❌ ' + e.message, 'error'); }
     });
 
