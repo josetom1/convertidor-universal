@@ -318,12 +318,10 @@
   // ================================================================
 
   let currentFormat = 'all';
-  let invertMode = false;
 
   function initFormatSelector() {
     const buttons = $$('.format-btn');
     const searchInput = document.getElementById('tool-search');
-    const invertBtn = document.getElementById('invert-btn');
 
     // Click en formato
     buttons.forEach(btn => {
@@ -336,30 +334,6 @@
       });
     });
 
-    // Botón invertir
-    if (invertBtn) {
-      invertBtn.addEventListener('click', () => {
-        invertMode = !invertMode;
-        invertBtn.classList.toggle('active', invertMode);
-        // Mostrar/ocultar banner de modo invertido
-        let banner = document.getElementById('invert-banner');
-        if (invertMode) {
-          if (!banner) {
-            banner = document.createElement('div');
-            banner.id = 'invert-banner';
-            banner.className = 'invert-mode-banner';
-            banner.innerHTML = '🔄 Modo invertido: mostrando conversiones Y → X';
-            document.querySelector('#tool-search')?.insertAdjacentElement('beforebegin', banner);
-          }
-          banner.style.display = 'block';
-        } else if (banner) {
-          banner.style.display = 'none';
-        }
-        if (searchInput) searchInput.value = '';
-        filterTools();
-      });
-    }
-
     // Búsqueda
     if (searchInput) {
       searchInput.addEventListener('input', filterTools);
@@ -369,6 +343,61 @@
     filterTools();
   }
 
+  // ================================================================
+  //  BOTONES DE INVERTIR POR CASILLA
+  // ================================================================
+
+  function initInvertButtons() {
+    const cards = Array.from($$('.tool-card'));
+    const pairs = {};
+
+    // Agrupar tarjetas por par (mismo data-inverse)
+    cards.forEach(card => {
+      const par = card.dataset.inverse;
+      if (!par) return;
+      if (!pairs[par]) pairs[par] = [];
+      pairs[par].push(card);
+    });
+
+    // Procesar cada par
+    Object.entries(pairs).forEach(([parId, list]) => {
+      if (list.length < 2) return; // par incompleto, sin botón
+      list.forEach((card, index) => {
+        // La segunda del par (contraparte) inicia oculta
+        if (index > 0) card.classList.add('inv-hidden');
+        addInvertBtn(card, list, index, parId);
+      });
+    });
+  }
+
+  function addInvertBtn(card, list, index, parId) {
+    const header = card.querySelector('.tool-card-header');
+    if (!header) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'invert-card-btn';
+    btn.type = 'button';
+    btn.title = 'Invertir conversión: ver la dirección contraria';
+    btn.innerHTML = '🔄';
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Mostrar la otra tarjeta del par en su lugar
+      list.forEach((c, i) => {
+        c.classList.toggle('inv-hidden', i !== index ? false : true);
+      });
+      // Pequeña animación
+      const shown = list.find(c => !c.classList.contains('inv-hidden'));
+      if (shown) {
+        shown.classList.remove('fade-in');
+        void shown.offsetWidth; // reiniciar animación
+        shown.classList.add('fade-in');
+      }
+    });
+
+    header.appendChild(btn);
+  }
+
   function filterTools() {
     const q = (document.getElementById('tool-search')?.value || '').toLowerCase().trim();
     const cards = $$('.tool-card');
@@ -376,15 +405,13 @@
     let visibleCount = 0;
 
     cards.forEach(card => {
-      const isInverse = card.hasAttribute('data-inverse');
-      // Modo normal: mostrar todo. Modo invertido: solo contrapartes (Y → X)
-      const matchInvert = invertMode ? isInverse : true;
-      // En modo invertido ignoramos el filtro de formato (mostramos todas las Y→X)
       const formats = (card.dataset.format || '').split(' ');
-      const matchFormat = invertMode || currentFormat === 'all' || formats.includes(currentFormat);
+      // Coincide con el formato seleccionado?
+      const matchFormat = currentFormat === 'all' || formats.includes(currentFormat);
+      // Coincide con la búsqueda?
       const matchSearch = !q || card.textContent.toLowerCase().includes(q);
 
-      if (matchInvert && matchFormat && matchSearch) {
+      if (matchFormat && matchSearch) {
         card.classList.remove('hidden');
         card.classList.add('fade-in');
         visibleCount++;
@@ -858,6 +885,7 @@
     initAdWall();
     initPremium();
     initFormatSelector();
+    initInvertButtons();
     initFileUploads();
     initAllTools();
     initToolButtons();

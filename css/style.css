@@ -792,41 +792,27 @@ body {
    FORMAT SELECTOR
    ============================================================ */
 
-.invert-btn {
-  padding: 0.6rem 1.2rem;
-  border: 2px solid var(--secondary);
-  background: var(--surface);
-  color: var(--secondary);
-  font-family: var(--font);
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  border-radius: 12px;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-
-.invert-btn:hover {
-  background: var(--secondary-light);
-  transform: translateY(-1px);
-}
-
-.invert-btn.active {
-  background: var(--secondary);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(13,148,136,0.3);
-}
-
-.invert-mode-banner {
-  text-align: center;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  background: var(--secondary-light);
-  border: 1px solid var(--secondary);
-  border-radius: var(--radius-sm);
-  color: var(--secondary);
+/* Botón 🔄 dentro de cada tarjeta con conversión inversa */
+.invert-card-btn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.2rem 0.45rem;
   font-size: 0.85rem;
-  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.invert-card-btn:hover {
+  background: var(--secondary-light);
+  border-color: var(--secondary);
+  transform: rotate(180deg);
+}
+
+.inv-hidden {
+  display: none !important;
 }
 
 .format-selector {
